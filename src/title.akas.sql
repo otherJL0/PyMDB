@@ -6,5 +6,5 @@ CREATE TABLE title.akas (
   language text,
   types text[],
   attributes text,
-  is_original_title 
+  is_original_title boolean
 );
