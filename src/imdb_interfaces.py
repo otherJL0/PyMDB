@@ -3,31 +3,20 @@ from typing import List
 
 
 def list_join(l):
-    result = ",".join(l)
+    result = ",".join(l.split(" "))
     return "{" + result + "}"
 
 
-class Schema:
-    def __init__(self, schema_name):
-        self.schema = schema_name
-        self.result = []
+@dataclass
+class Table:
+    result: List = field(init=False, default_factory=list)
 
-    def __repr__(self):
-        return "\t".join(result)
+    def __str__(self):
+        return "\t".join(self.result).replace("\\N", "NULL")
 
 
 @dataclass
-class Name(Schema):
-    schema = "name"
-
-
-@dataclass
-class Title(Schema):
-    schema = "title"
-
-
-@dataclass
-class Basics(Name):
+class Basics(Table):
     nconst: str
     primary_name: str
     birth_year: int
@@ -45,7 +34,7 @@ class Basics(Name):
 
 
 @dataclass
-class Akas(Title):
+class Akas(Table):
     title_id: str
     ordering: int
     title: str
@@ -56,6 +45,7 @@ class Akas(Title):
     is_original_title: bool
 
     def __post_init__(self):
+        self.result.append(self.title_id)
         self.result.append(self.ordering)
         self.result.append(self.title)
         self.result.append(self.region)
@@ -66,7 +56,7 @@ class Akas(Title):
 
 
 @dataclass
-class Basics(Title):
+class Basics(Table):
     tconst: str
     title_type: str
     primary_title: str
@@ -78,7 +68,6 @@ class Basics(Title):
     genres: List[str]
 
     def __post_init__(self):
-        result = []
         self.result.append(self.tconst)
         self.result.append(self.title_type)
         self.result.append(self.primary_title)
@@ -88,11 +77,10 @@ class Basics(Title):
         self.result.append(self.end_year)
         self.result.append(self.runtime_minutes)
         self.result.append(list_join(self.genres))
-        return "\t".join(result)
 
 
 @dataclass
-class Principals(Title):
+class Principals(Table):
     tconst: str
     ordering: int
     nconst: str
@@ -101,11 +89,16 @@ class Principals(Title):
     characters: str
 
     def __post_init__(self):
-        self.result.append()
+        self.result.append(self.tconst)
+        self.result.append(self.ordering)
+        self.result.append(self.nconst)
+        self.result.append(self.category)
+        self.result.append(self.job)
+        self.result.append(self.characters)
 
 
 @dataclass
-class Crew(Title):
+class Crew(Table):
     tconst: str
     directors: List[str]
 
@@ -115,7 +108,7 @@ class Crew(Title):
 
 
 @dataclass
-class Episode(Title):
+class Episode(Table):
     tconst: str
     parent_tconst: str
     season_number: int
@@ -129,7 +122,7 @@ class Episode(Title):
 
 
 @dataclass
-class Ratings(Title):
+class Ratings(Table):
     tconst: str
     average_rating: float
     num_votes: int
