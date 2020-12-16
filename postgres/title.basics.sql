@@ -23,4 +23,7 @@ COPY title.basics(
   end_year,
   runtime_minutes,
   genres)
-FROM '/home/jlopez/git/imdb/csv/title.basics.csv' CSV HEADER;
+FROM '/home/jlopez/git/imdb/csv/title.basics.csv'
+WITH DELIMITER AS ',' QUOTE '"' ESCAPE '\' CSV HEADER;
+
+CREATE UNIQUE INDEX ON title.basics (tconst);

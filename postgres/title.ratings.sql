@@ -11,4 +11,7 @@ COPY title.ratings(
   tconst,
   average_rating,
   num_votes)
-FROM '/home/jlopez/git/imdb/csv/title.ratings.csv' CSV HEADER;
+FROM '/home/jlopez/git/imdb/csv/title.ratings.csv'
+WITH DELIMITER AS ',' QUOTE '"' ESCAPE '\' CSV HEADER;
+
+CREATE UNIQUE INDEX ON title.ratings (tconst);

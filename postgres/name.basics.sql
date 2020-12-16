@@ -17,4 +17,7 @@ COPY name.basics(
   death_year,
   primary_profession,
   known_for_titles)
-FROM '/home/jlopez/git/imdb/csv/name.basics.csv' CSV HEADER;
+FROM '/home/jlopez/git/imdb/csv/name.basics.csv'
+WITH DELIMITER AS ',' QUOTE '"' ESCAPE '\' CSV HEADER;
+
+CREATE UNIQUE INDEX ON name.basics (nconst);

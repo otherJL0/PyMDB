@@ -9,6 +9,9 @@ CREATE TABLE title.crew(
 
 COPY title.crew(
   tconst,
-  directory,
+  directors,
   writers)
-FROM '/home/jlopez/git/imdb/csv/title.crew.csv' CSV HEADER;
+FROM '/home/jlopez/git/imdb/csv/title.crew.csv'
+WITH DELIMITER AS ',' QUOTE '"' ESCAPE '\' CSV HEADER;
+
+CREATE UNIQUE INDEX ON title.crew (tconst);
