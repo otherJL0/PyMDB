@@ -17,4 +17,4 @@ COPY title.principals(
   category,
   job,
   characters)
-FROM '/home/jlopez/git/imdb/csv/title.principals.csv' DELIMITER ',' CSV HEADER;
+FROM '/home/jlopez/git/imdb/csv/title.principals.csv' CSV HEADER;

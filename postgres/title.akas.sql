@@ -21,4 +21,4 @@ COPY title.akas(
   types,
   attributes,
   is_original_title)
-FROM '/home/jlopez/git/imdb/csv/title.akas.csv' DELIMITER ',' CSV HEADER;
+FROM '/home/jlopez/git/imdb/csv/title.akas.csv' WITH DELIMITER AS ',' CSV HEADER;

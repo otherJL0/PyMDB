@@ -3,12 +3,12 @@ from typing import List
 
 
 def list_join(l):
-    result = "'\,'".join(l.split(" "))
+    result = "','".join(l.split(" "))
     return "\"{'" + result + "'}\""
 
 
 def to_text(val):
-    return f"'{val}'"
+    return f'"{val}"'
 
 
 @dataclass

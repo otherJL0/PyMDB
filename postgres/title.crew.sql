@@ -11,4 +11,4 @@ COPY title.crew(
   tconst,
   directory,
   writers)
-FROM 'csv/title.crew.csv' DELIMITER ',' CSV HEADER;
+FROM '/home/jlopez/git/imdb/csv/title.crew.csv' CSV HEADER;
