@@ -1,5 +1,5 @@
 # PyMDB
-Python wrapper for IMDB data.
+
 This repo explores how Python dataclasses can described semi-structured data
 (tsv files).
 While this can be done using Pandas and SQLAlchemy, this repo is an excuse to
