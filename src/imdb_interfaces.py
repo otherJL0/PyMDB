@@ -1,23 +1,42 @@
 from dataclasses import dataclass, field
-from typing import List
+from typing import Any, List
 
 
-def list_join(l):
+def list_join(l: str) -> str:
+    """ Joins a list of strings to a single string """
     result = [to_text(i) for i in l.split(" ")]
     result = "','".join(result)
     return "\"{'" + result + "'}\""
 
 
-def to_text(val):
+def to_text(val: str) -> str:
+    """ Normalize strings with """
     result = val.replace('"', '""')
     return f'"{result}"'
 
 
 @dataclass
 class Table:
-    result: List = field(init=False, default_factory=list)
+    """
+    Parent dataclass representation of a SQL table
 
-    def __str__(self):
+    ...
+
+    Attributes
+    ----------
+    result : List[Any]
+        Holds all column values for a single row
+
+    Methods
+    -------
+    __str__()
+        Returns a comma separated list of elements in result
+
+    """
+
+    result: List[Any] = field(init=False, default_factory=list)
+
+    def __str__(self) -> str:
         return ",".join(self.result).replace("\\N", "")
 
 

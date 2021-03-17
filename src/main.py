@@ -1,26 +1,28 @@
-from imdb_interfaces import *
 from multiprocessing import Pool
-import os
 
-files = {}
-files["name.basics.tsv"] = Name
-files["title.akas.tsv"] = Akas
-files["title.basics.tsv"] = Basics
-files["title.crew.tsv"] = Crew
-files["title.episode.tsv"] = Episode
-files["title.principals.tsv"] = Principals
-files["title.ratings.tsv"] = Ratings
+import imdb_interfaces as imdb
+
+FILE_INTERFACE_MAPPINGS = {
+    "name.basics.tsv": imdb.Name,
+    "title.akas.tsv": imdb.Akas,
+    "title.basics.tsv": imdb.Basics,
+    "title.crew.tsv": imdb.Crew,
+    "title.episode.tsv": imdb.Episode,
+    "title.principals.tsv": imdb.Principals,
+    "title.ratings.tsv": imdb.Ratings,
+}
 
 
-def convert_to_csv(fname):
-    outfile = open(f"csv/{fname.replace('tsv', 'csv')}", "w")
-    with open(f"data/{fname}", "r") as tsv:
-        for line in tsv:
-            tmp = files[fname](*line.strip().split("\t"))
-            outfile.write(str(tmp) + "\n")
-        outfile.close()
+def convert_to_csv(tsv_infile: str):
+    """ Converts a TSV file into a CSV file to be read by Postgres """
+    csv_outfile = open(f"csv/{tsv_infile.replace('tsv', 'csv')}", "w")
+    with open(f"data/{tsv_infile}", "r") as tsv:
+        for tsv_line in tsv:
+            tmp = FILE_INTERFACE_MAPPINGS[tsv_infile](*tsv_line.strip().split("\t"))
+            csv_outfile.write(str(tmp) + "\n")
+        csv_outfile.close()
 
 
 if __name__ == "__main__":
     with Pool() as p:
-        p.map(convert_to_csv, files.keys())
+        p.map(convert_to_csv, FILE_INTERFACE_MAPPINGS.keys())
