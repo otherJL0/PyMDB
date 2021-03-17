@@ -25,4 +25,5 @@ def convert_to_csv(tsv_infile: str):
 
 if __name__ == "__main__":
     with Pool() as p:
+        """ Converts each file in parallel """
         p.map(convert_to_csv, FILE_INTERFACE_MAPPINGS.keys())
